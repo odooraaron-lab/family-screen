@@ -6,6 +6,7 @@ import { db } from '@/lib/db';
 import { getScreen, isOwner, base, type Screen } from '@/lib/screens';
 import { token, inviteCode } from '@/lib/tokens';
 import { welcomeEmail } from '@/lib/email';
+import { claimPairing } from '@/lib/pairing';
 
 async function ownerScreen(form: FormData): Promise<Screen> {
   const s = await getScreen(String(form.get('slug') || ''));
@@ -62,6 +63,16 @@ export async function newTvLink(form: FormData) {
   const s = await ownerScreen(form);
   await db()`update fs_screens set tv_key = ${token(18)} where slug = ${s.slug}`;
   done(s, 'New TV link made. Open it on the TV; the old link has stopped working.');
+}
+
+export async function connectTv(form: FormData) {
+  const s = await ownerScreen(form);
+  const ok = await claimPairing(String(form.get('code') || ''), s.slug);
+  if (!ok) {
+    revalidatePath(`/s/${s.slug}/family`);
+    redirect(`${base(s.slug)}/family?err=${encodeURIComponent('That code didn’t work. Check the numbers on the TV, or refresh the TV page for a new code.')}`);
+  }
+  done(s, `TV connected. It will start showing ${s.resident_name}’s photos in a few seconds.`);
 }
 
 export async function newSendLink(form: FormData) {

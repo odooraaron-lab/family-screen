@@ -1,10 +1,10 @@
 import { notFound } from 'next/navigation';
 import { db } from '@/lib/db';
 import { getScreen, isOwner, base } from '@/lib/screens';
-import { screenUrl, PRODUCT, PRICES } from '@/lib/config';
+import { screenUrl, PRODUCT, PRICES, APP_URL } from '@/lib/config';
 import { CopyLink } from '@/components/CopyLink';
 import { ConfirmButton } from '@/components/ConfirmButton';
-import { approveSender, blockSender, removeMessage, saveSettings, newTvLink, newSendLink, emailLinks } from './actions';
+import { approveSender, blockSender, removeMessage, saveSettings, newTvLink, newSendLink, emailLinks, connectTv } from './actions';
 
 export const dynamic = 'force-dynamic';
 
@@ -24,7 +24,7 @@ const Hidden = ({ slug, id }: { slug: string; id?: number }) => (
 );
 
 export default async function Family({ params, searchParams }: {
-  params: { slug: string }; searchParams: { ok?: string; sent?: string };
+  params: { slug: string }; searchParams: { ok?: string; sent?: string; err?: string };
 }) {
   const s = await getScreen(params.slug);
   if (!s || s.status === 'pending') notFound();
@@ -72,6 +72,7 @@ export default async function Family({ params, searchParams }: {
       </header>
       <main className="wrap" style={{ paddingBottom: 60 }}>
         {searchParams.ok && <div className="notice ok" role="status">{searchParams.ok}</div>}
+        {searchParams.err && <div className="notice bad" role="alert">{searchParams.err}</div>}
         {s.status !== 'active' && (
           <div className="notice bad">The subscription has ended, so the TV is paused. Restart it from Subscription below.</div>
         )}
@@ -127,10 +128,20 @@ export default async function Family({ params, searchParams }: {
 
           <div className="stack">
             <section className="card">
+              <h2 style={{ fontSize: 22 }}>Connect a TV</h2>
+              <p className="small">On {s.resident_name}’s TV, open the web browser and go to <strong>{APP_URL.replace(/^https?:\/\//, '')}/tv</strong>. Type the 6-digit code it shows here.</p>
+              <form action={connectTv} className="row">
+                <Hidden slug={s.slug} />
+                <input type="text" name="code" inputMode="numeric" autoComplete="off" placeholder="123 456" maxLength={7} required style={{ maxWidth: 160 }} />
+                <button className="btn small">Connect</button>
+              </form>
+            </section>
+
+            <section className="card">
               <h2 style={{ fontSize: 22 }}>Links</h2>
               <p className="small" style={{ marginBottom: 4 }}><strong>Send link</strong> for the family</p>
               <CopyLink url={sendLink} />
-              <p className="small" style={{ marginBottom: 4 }}><strong>TV link</strong> to open on {s.resident_name}’s TV</p>
+              <p className="small" style={{ marginBottom: 4 }}><strong>TV link</strong> (instead of a code, if you prefer to type it)</p>
               <CopyLink url={tvLink} />
               <div className="row">
                 <a className="btn small" href={`${b}/card`} target="_blank" rel="noreferrer">Print the QR card</a>

@@ -1,7 +1,7 @@
 import { SiteHead, SiteFoot } from '@/components/SiteChrome';
 import { stripe } from '@/lib/stripe';
 import { activateFromSession } from '@/lib/activate';
-import { screenUrl } from '@/lib/config';
+import { screenUrl, APP_URL } from '@/lib/config';
 
 export const dynamic = 'force-dynamic';
 
@@ -32,9 +32,10 @@ export default async function Done({ searchParams }: { searchParams: { session_i
             <p>We’ve emailed these to {screen.owner_email} as well.</p>
             <div className="card stack">
               <div>
-                <h3>1. Open this on the TV</h3>
-                <p className="muted small">In the TV’s web browser. Press OK once to start, then bookmark it.</p>
-                <code style={{ wordBreak: 'break-all' }}>{screenUrl(screen.slug, `/tv?k=${screen.tv_key}`)}</code>
+                <h3>1. Connect the TV</h3>
+                <p className="muted small">In the TV’s web browser go to the address below. It shows a 6-digit code: open your admin page (step 3) and type it under “Connect a TV”.</p>
+                <code style={{ fontSize: 22 }}>{APP_URL.replace(/^https?:\/\//, '')}/tv</code>
+                <p className="muted small" style={{ marginTop: 8 }}>Or type the full TV link: <span style={{ wordBreak: 'break-all' }}>{screenUrl(screen.slug, `/tv?k=${screen.tv_key}`)}</span></p>
               </div>
               <div>
                 <h3>2. Share the send link with the family</h3>
