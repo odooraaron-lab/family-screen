@@ -3,6 +3,7 @@ import { db } from '@/lib/db';
 import { getScreen, isOwner, base } from '@/lib/screens';
 import { screenUrl, PRODUCT, PRICES, APP_URL } from '@/lib/config';
 import { CopyLink } from '@/components/CopyLink';
+import { Logo } from '@/components/SiteChrome';
 import { ConfirmButton } from '@/components/ConfirmButton';
 import { approveSender, blockSender, removeMessage, saveSettings, newTvLink, newSendLink, emailLinks, connectTv } from './actions';
 
@@ -61,16 +62,27 @@ export default async function Family({ params, searchParams }: {
 
   return (
     <>
-      <header className="send-head">
+      <div className="dash-top">
         <div className="wrap">
-          <h1>{s.resident_name}’s {PRODUCT}</h1>
-          <p>
-            <span className={`pill ${tv.ok ? '' : 'wait'}`} style={{ marginRight: 10 }}>{tv.text}</span>
-            {usage.n} {usage.n === 1 ? 'thing' : 'things'} playing on the TV
-          </p>
+          <span className="logo"><Logo size={28} light />{PRODUCT} <small>&middot; Family page</small></span>
         </div>
+      </div>
+      <div className="dash-body">
+      <header className="wrap dash-head">
+        <div className="row">
+          <span className={`pill onair ${tv.ok ? '' : 'wait'}`}>{tv.text}</span>
+          <span className="pill" style={{ background: '#fff', color: 'var(--ink)', border: '1px solid var(--line)' }}>{usage.n} {usage.n === 1 ? 'thing' : 'things'} playing</span>
+        </div>
+        <h1>{s.resident_name}’s screen</h1>
+        <p>Approve family, remove anything, and change settings. The TV picks up changes within a minute.</p>
       </header>
-      <main className="wrap" style={{ paddingBottom: 60 }}>
+      <nav className="wrap quick" aria-label="Quick links">
+        <a href={`${b}/send?c=${s.invite_code}`}><span className="ico" style={{ background: 'var(--accent-soft)', color: 'var(--accent)' }}><QIco d="M4 12l16-8-6 16-2-7z" /></span><span>Send something<small>Photo, video or note</small></span></a>
+        <a href={`${b}/card`} target="_blank" rel="noreferrer"><span className="ico" style={{ background: 'var(--lamp-soft)', color: '#9A6B00' }}><QIco d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h2v2h-2zM18 18h2v2h-2z" /></span><span>QR card<small>Print for the family</small></span></a>
+        <a href={tvLink} target="_blank" rel="noreferrer"><span className="ico" style={{ background: 'var(--teal-soft)', color: 'var(--teal)' }}><QIco d="M3 5h18v12H3zM8 21h8" /></span><span>Preview the TV<small>See what’s playing</small></span></a>
+        <a href={`/api/screens/${s.slug}/billing`}><span className="ico" style={{ background: 'var(--panel)' }}><QIco d="M3 6h18v12H3zM3 10h18" /></span><span>Subscription<small>Card, plan or cancel</small></span></a>
+      </nav>
+      <main className="wrap">
         {searchParams.ok && <div className="notice ok" role="status">{searchParams.ok}</div>}
         {searchParams.err && <div className="notice bad" role="alert">{searchParams.err}</div>}
         {s.status !== 'active' && (
@@ -80,13 +92,13 @@ export default async function Family({ params, searchParams }: {
         <div className="admin-grid">
           <div className="stack">
             {pending.length > 0 && (
-              <section className="card">
-                <h2 style={{ fontSize: 24 }}>Waiting for your OK</h2>
+              <section className="card waiting">
+                <h2 style={{ fontSize: 24 }}>Waiting for your OK <span className="pill wait" style={{ verticalAlign: 'middle' }}>{pending.length}</span></h2>
                 <p className="muted small">Approve someone once and everything they send goes straight to the TV.</p>
                 <ul className="people">
                   {pending.map((p) => (
                     <li key={p.id}>
-                      <div><strong>{p.name}</strong><div className="small muted">{p.waiting} waiting to play</div></div>
+                      <div className="row" style={{ flexWrap: 'nowrap' }}><span className="avatar">{p.name.slice(0, 1).toUpperCase()}</span><div><strong>{p.name}</strong><div className="small muted">{p.waiting} waiting to play</div></div></div>
                       <div className="row">
                         <form action={approveSender} className="inline"><Hidden slug={s.slug} id={p.id} /><button className="btn small">Approve</button></form>
                         <form action={blockSender} className="inline"><Hidden slug={s.slug} id={p.id} /><button className="btn small danger">Block</button></form>
@@ -100,7 +112,7 @@ export default async function Family({ params, searchParams }: {
             <section className="card">
               <h2 style={{ fontSize: 24 }}>On the TV</h2>
               {messages.length === 0 ? (
-                <p className="muted">Nothing yet. Send the first photo using the send link on the right.</p>
+                <p className="empty">Nothing yet. Send the first photo using the send link on the right.</p>
               ) : (
                 <div className="media-grid">
                   {messages.map((m) => (
@@ -127,8 +139,8 @@ export default async function Family({ params, searchParams }: {
           </div>
 
           <div className="stack">
-            <section className="card">
-              <h2 style={{ fontSize: 22 }}>Connect a TV</h2>
+            <section className="card accent">
+              <h2 style={{ fontSize: 24 }}>Connect a TV</h2>
               <p className="small">On {s.resident_name}’s TV, open the web browser and go to <strong>{APP_URL.replace(/^https?:\/\//, '')}/tv</strong>. Type the 6-digit code it shows here.</p>
               <form action={connectTv} className="row">
                 <Hidden slug={s.slug} />
@@ -175,7 +187,7 @@ export default async function Family({ params, searchParams }: {
                 <ul className="people">
                   {people.map((p) => (
                     <li key={p.id}>
-                      <span>{p.name}</span>
+                      <span className="row" style={{ flexWrap: 'nowrap' }}><span className="avatar">{p.name.slice(0, 1).toUpperCase()}</span>{p.name}</span>
                       <form action={blockSender} className="inline"><Hidden slug={s.slug} id={p.id} />
                         <ConfirmButton className="btn small danger" message={`Stop ${p.name} sending? Their past photos stay unless you remove them.`}>Block</ConfirmButton>
                       </form>
@@ -202,6 +214,11 @@ export default async function Family({ params, searchParams }: {
           </div>
         </div>
       </main>
+      </div>
     </>
   );
+}
+
+function QIco({ d }: { d: string }) {
+  return <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={d} /></svg>;
 }

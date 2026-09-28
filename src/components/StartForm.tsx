@@ -4,8 +4,8 @@ import { useEffect, useRef, useState } from 'react';
 const toSlug = (s: string) =>
   s.toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 30);
 
-export function StartForm({ domain, prices, trialDays }: {
-  domain: string; prices: { monthly: string; yearly: string }; trialDays: number;
+export function StartForm({ domain, prices, trialDays, plan = 'yearly' }: {
+  domain: string; prices: { monthly: string; yearly: string }; trialDays: number; plan?: 'monthly' | 'yearly';
 }) {
   const [resident, setResident] = useState('');
   const [slug, setSlug] = useState('');
@@ -65,8 +65,8 @@ export function StartForm({ domain, prices, trialDays }: {
       <fieldset style={{ border: 0, padding: 0, margin: 0 }}>
         <legend className="field" style={{ marginBottom: 8 }}>Plan</legend>
         <div className="plans">
-          <label className="plan"><input type="radio" name="plan" value="yearly" defaultChecked /><strong>{prices.yearly}</strong>Best value</label>
-          <label className="plan"><input type="radio" name="plan" value="monthly" /><strong>{prices.monthly}</strong>Cancel any time</label>
+          <label className="plan"><input type="radio" name="plan" value="yearly" defaultChecked={plan === 'yearly'} /><strong>{prices.yearly}</strong>Best value</label>
+          <label className="plan"><input type="radio" name="plan" value="monthly" defaultChecked={plan === 'monthly'} /><strong>{prices.monthly}</strong>Cancel any time</label>
         </div>
       </fieldset>
 
