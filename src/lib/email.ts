@@ -1,4 +1,4 @@
-import { PRODUCT, BRAND, SUPPORT_EMAIL, screenUrl } from './config';
+import { PRODUCT, BRAND, SUPPORT_EMAIL, APP_URL, screenUrl } from './config';
 import type { Screen } from './screens';
 
 export async function sendEmail(to: string, subject: string, text: string) {
@@ -24,9 +24,11 @@ export function welcomeEmail(s: Screen) {
 
 ${s.resident_name}'s ${PRODUCT} is set up. Here's everything you need.
 
-1. THE TV LINK (open this on ${s.resident_name}'s TV)
-${tv}
-Open it in the TV's web browser, press OK once to start, then bookmark it.
+1. CONNECT THE TV
+On ${s.resident_name}'s TV, open the web browser and go to:
+${APP_URL.replace(/^https?:\/\//, '')}/tv
+It shows a 6-digit code. Open your family admin page (link 4) on your phone, tap "Connect a TV" and type the code.
+(Or type the full TV link instead: ${tv})
 Tip: if the TV's browser struggles, a Chromecast or Fire TV Stick works well.
 
 2. THE SEND LINK (share with the whole family)

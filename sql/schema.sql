@@ -47,3 +47,11 @@ create table if not exists fs_messages (
   created_at timestamptz not null default now()
 );
 create index if not exists fs_messages_slug_idx on fs_messages (slug, id desc);
+
+-- TV pairing codes (the app also creates this by itself on first use).
+create table if not exists fs_tv_pairings (
+  code       text primary key,                            -- 6 digits shown on the TV
+  device     text not null unique,                        -- the TV's own secret
+  slug       text references fs_screens(slug) on delete cascade,
+  created_at timestamptz not null default now()
+);
