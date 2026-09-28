@@ -1,4 +1,4 @@
-export const BRAND = process.env.BRAND_NAME || 'Your Brand';
+export const BRAND = process.env.BRAND_NAME || 'myQR';
 export const PRODUCT = process.env.PRODUCT_NAME || 'Family Screen';
 export const APP_URL = (process.env.APP_URL || 'http://localhost:3000').replace(/\/$/, '');
 export const SCREENS_DOMAIN = (process.env.SCREENS_DOMAIN || '').toLowerCase();
@@ -17,7 +17,7 @@ export const RESERVED = new Set([
 
 export const SLUG_RE = /^[a-z0-9](?:[a-z0-9-]{1,28}[a-z0-9])$/;
 
-/** Full link to a page of a screen: https://grandpa-joe.resthome.yourbrand.nz/send, or /s/grandpa-joe/send without a domain. */
+/** Full link to a page of a screen: https://grandpa-joe.resthome.myqr.co.nz/send, or /s/grandpa-joe/send without a domain. */
 export function screenUrl(slug: string, path = '') {
   if (SCREENS_DOMAIN) return `https://${slug}.${SCREENS_DOMAIN}${path}`;
   return `${APP_URL}/s/${slug}${path}`;
