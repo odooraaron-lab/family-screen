@@ -1,6 +1,6 @@
 import QRCode from 'qrcode';
 import { getScreen } from '@/lib/screens';
-import { screenUrl, PRODUCT } from '@/lib/config';
+import { screenUrl, PRODUCT, APP_URL } from '@/lib/config';
 import { TV_CSS, TV_JS } from '@/lib/tv';
 
 export const dynamic = 'force-dynamic';
@@ -22,7 +22,7 @@ export async function GET(req: Request, { params }: { params: { slug: string } }
 
   if (!s || s.status === 'pending' || !k || k !== s.tv_key) {
     return new Response(page(PRODUCT, '', `<div class="center"><h1>This TV link isn’t quite right</h1>
-      <p>Please ask your family for the TV link from their ${esc(PRODUCT)} email.</p></div>`), { status: 404, headers: html });
+      <p>To connect this TV again, go to <b>${esc(APP_URL.replace(/^https?:\/\//, ''))}/tv</b> and ask your family to enter the code it shows.</p></div>`), { status: 404, headers: html });
   }
 
   const qr = await QRCode.toString(screenUrl(s.slug, `/send?c=${s.invite_code}`), { type: 'svg', margin: 0, errorCorrectionLevel: 'M' });

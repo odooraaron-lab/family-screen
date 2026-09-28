@@ -1,11 +1,11 @@
-import { newPairing, pairedScreen } from '@/lib/pairing';
+import { newPairing, pairedScreen, tvCookie } from '@/lib/pairing';
 import { getScreen } from '@/lib/screens';
 import { screenUrl } from '@/lib/config';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-const json = (data: unknown, status = 200) => Response.json(data, { status, headers: { 'cache-control': 'no-store' } });
+const json = (data: unknown, extra: Record<string, string> = {}) => Response.json(data, { headers: { 'cache-control': 'no-store', ...extra } });
 
 /** The TV asks for a code to show. */
 export async function POST() {
@@ -21,5 +21,5 @@ export async function GET(req: Request) {
   if (!slug) return json({ status: 'waiting' });
   const s = await getScreen(slug);
   if (!s || s.status === 'pending') return json({ status: 'expired' });
-  return json({ status: 'paired', url: screenUrl(s.slug, `/tv?k=${s.tv_key}`) });
+  return json({ status: 'paired', url: screenUrl(s.slug, `/tv?k=${s.tv_key}`) }, { 'set-cookie': tvCookie(s.slug, s.tv_key) });
 }

@@ -53,3 +53,21 @@ export async function claimPairing(code: string, slug: string) {
     returning code`;
   return rows.length > 0;
 }
+
+// Once paired, the TV keeps a cookie so <app>/tv goes straight to its screen next time
+// (after a power cut, or if the browser opens on a blank page). No code needed again.
+export const TV_COOKIE = 'fs_tv';
+
+export function tvCookie(slug: string, key: string) {
+  const domain = (process.env.SCREENS_DOMAIN || '').toLowerCase();
+  return [
+    `${TV_COOKIE}=${slug}.${key}`, 'Path=/', `Max-Age=${60 * 60 * 24 * 365 * 5}`, 'HttpOnly', 'SameSite=Lax',
+    ...(process.env.NODE_ENV === 'production' ? ['Secure'] : []),
+    ...(domain ? [`Domain=${domain}`] : []),
+  ].join('; ');
+}
+
+export function readTvCookie(req: Request): { slug: string; key: string } | null {
+  const m = (req.headers.get('cookie') || '').match(/(?:^|;\s*)fs_tv=([a-z0-9-]+)\.([A-Za-z0-9_-]+)/);
+  return m ? { slug: m[1], key: m[2] } : null;
+}

@@ -1,4 +1,6 @@
-import { APP_URL, PRODUCT } from '@/lib/config';
+import { APP_URL, PRODUCT, screenUrl } from '@/lib/config';
+import { getScreen } from '@/lib/screens';
+import { readTvCookie, TV_COOKIE } from '@/lib/pairing';
 
 export const dynamic = 'force-dynamic';
 
@@ -6,7 +8,16 @@ const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&
 
 // The short address typed on the TV. Shows a code; once the family enters it,
 // the TV moves to its own screen. Plain old JavaScript on purpose: TV browsers are often old.
-export function GET() {
+export async function GET(req: Request) {
+  // A TV that was connected before goes straight to its screen.
+  const saved = readTvCookie(req);
+  if (saved) {
+    const s = await getScreen(saved.slug).catch(() => null);
+    if (s && s.status !== 'pending' && s.tv_key === saved.key) {
+      return new Response(null, { status: 302, headers: { location: screenUrl(s.slug, `/tv?k=${s.tv_key}`), 'cache-control': 'no-store' } });
+    }
+  }
+
   const where = esc(APP_URL.replace(/^https?:\/\//, ''));
   const html = `<!doctype html>
 <html lang="en-NZ"><head><meta charset="utf-8">
@@ -64,5 +75,8 @@ p{font-size:2.4vw;line-height:1.4;margin:0 0 2vh;opacity:.9}
 })();
 </script>
 </body></html>`;
-  return new Response(html, { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } });
+  const headers: Record<string, string> = { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' };
+  // The saved screen is gone or its TV link was replaced: forget it and show a new code.
+  if (saved) headers['set-cookie'] = `${TV_COOKIE}=; Path=/; Max-Age=0${process.env.SCREENS_DOMAIN ? `; Domain=${process.env.SCREENS_DOMAIN.toLowerCase()}` : ''}`;
+  return new Response(html, { headers });
 }
