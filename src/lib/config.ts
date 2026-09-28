@@ -17,7 +17,7 @@ export const RESERVED = new Set([
 
 export const SLUG_RE = /^[a-z0-9](?:[a-z0-9-]{1,28}[a-z0-9])$/;
 
-/** Full link to a page of a screen: https://grandpa-joe.familyscreen.nz/send, or /s/grandpa-joe/send without a domain. */
+/** Full link to a page of a screen: https://grandpa-joe.resthome.yourbrand.nz/send, or /s/grandpa-joe/send without a domain. */
 export function screenUrl(slug: string, path = '') {
   if (SCREENS_DOMAIN) return `https://${slug}.${SCREENS_DOMAIN}${path}`;
   return `${APP_URL}/s/${slug}${path}`;

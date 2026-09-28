@@ -33,7 +33,7 @@ export async function POST(req: Request) {
     return Response.json({ error: 'That address was just taken. Try another.' }, { status: 409 });
   }
 
-  const product = process.env.HQ_PRODUCT || 'familyscreen';
+  const product = process.env.HQ_PRODUCT || 'resthome';
   const session = await stripe().checkout.sessions.create({
     mode: 'subscription',
     line_items: [{ price: PRICES[plan].id, quantity: 1 }],

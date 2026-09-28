@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from 'next/server';
 import { RESERVED } from '@/lib/config';
 
 /**
- * grandpa-joe.familyscreen.nz/send  →  /s/grandpa-joe/send
+ * grandpa-joe.resthome.yourbrand.nz/send  →  /s/grandpa-joe/send
  * (APIs and Next's own files are left alone.)
  */
 export function middleware(req: NextRequest) {
