@@ -15,7 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" />
-        {hq && <script defer src={`${hq}/beacon.js`} data-product={process.env.HQ_PRODUCT || 'familyscreen'} />}
+        {hq && <script defer src={`${hq}/beacon.js`} data-product={process.env.HQ_PRODUCT || 'resthome'} />}
       </head>
       <body>{children}</body>
     </html>

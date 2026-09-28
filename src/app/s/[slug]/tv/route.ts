@@ -32,7 +32,7 @@ export async function GET(req: Request, { params }: { params: { slug: string } }
     played: `/api/screens/${s.slug}/played`,
   };
   const hq = process.env.HQ_URL
-    ? `<script defer src="${process.env.HQ_URL}/beacon.js" data-product="${process.env.HQ_PRODUCT || 'familyscreen'}" data-site="${s.slug}" data-heartbeat></script>`
+    ? `<script defer src="${process.env.HQ_URL}/beacon.js" data-product="${process.env.HQ_PRODUCT || 'resthome'}" data-site="${s.slug}" data-heartbeat></script>`
     : '';
 
   const body = `
