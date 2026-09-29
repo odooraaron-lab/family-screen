@@ -1,6 +1,26 @@
 import Link from 'next/link';
 import { SiteHead, SiteFoot } from '@/components/SiteChrome';
+import type { Metadata } from 'next';
 import { PRICES, TRIAL_DAYS, SUPPORT_EMAIL, PRODUCT } from '@/lib/config';
+import { GUIDES } from '@/lib/guides';
+import { pageMeta, JsonLd, faqLd, productLd, organizationLd } from '@/lib/seo';
+
+export const metadata: Metadata = pageMeta(
+  '',
+  'Send Photos of the Grandkids to Nana’s TV in the Rest Home | Resthome TV NZ',
+  'Keep Nana and Poppa updated. The whole family sends photos, videos and messages from their phones and they play on the TV in their rest home room. No app, nothing for them to learn.',
+);
+
+const FAQ: [string, string][] = [
+  ['What kind of TV does it need?', 'Any smart TV with a web browser. If the TV is older or its browser is slow, a Chromecast or Fire TV Stick works well.'],
+  ['Does the rest home need to do anything?', 'Only turn the TV on and leave it on the right input. Everything else is done by the family.'],
+  ['Can the grandkids send photos?', 'Yes. Share the send link or QR card with the whole family. Each new sender is approved once, then they can send photos, short videos and notes from any phone, with no app.'],
+  ['Is it better than a digital photo frame?', 'If there’s a TV in the room, it’s much bigger, shows who sent each photo in large letters, and plays written messages and short videos too. If there’s no TV, a frame is a good choice.'],
+  ['What happens after a power cut?', 'Type the short address on the TV again and it goes straight back to the photos. No code needed a second time.'],
+  ['Can Mum reply?', 'Not yet. Senders can see when their message has played on the TV.'],
+  ['Who can see the photos?', 'Only the TV and the family members you approve. Photos aren’t public or searchable, and you can delete anything at any time.'],
+  ['How do I cancel?', 'From your family page, under Subscription. The screen keeps working until the end of the period you’ve paid for.'],
+];
 
 // The room: window, lamp, armchair with the resident, a plant. The TV and phone sit on top as HTML.
 function Room() {
@@ -68,13 +88,14 @@ const COMPARE: { what: string; us: boolean; call: boolean; frame: boolean; chat:
 export default function Home() {
   return (
     <>
+      <JsonLd data={[organizationLd(), productLd(), faqLd(FAQ)]} />
       <SiteHead />
       <main className="lp">
         {/* ── Hero ── */}
         <section className="lp-hero">
           <div className="wrap lp-hero-in">
             <div>
-              <span className="eyebrow">For families with someone in a rest home</span>
+              <span className="eyebrow">For Nana, Poppa and the whole whānau</span>
               <h1>Be part of Mum’s day, <span className="hl">even when you can’t be there.</span></h1>
               <p className="lede">
                 The whole family sends photos, videos and little notes from their phones. They appear on the TV in her room,
@@ -139,6 +160,25 @@ export default function Home() {
                 <span className="tv-from">From Sarah in Brisbane</span>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* ── Grandkids ── */}
+        <section className="wrap section" id="grandkids">
+          <div className="section-head" style={{ display: 'block' }}>
+            <span className="eyebrow">Keep Nana and Poppa in the loop</span>
+            <h2>The grandkids grow up fast. Now Nana doesn’t miss it.</h2>
+            <p className="muted" style={{ maxWidth: 680, margin: 0 }}>The family group chat moves faster than Nana can scroll. Send the everyday moments to her TV instead, where she can actually see them, with the grandkid’s name in big letters.</p>
+          </div>
+          <div className="rt-grand">
+            <div className="feature"><h3>After school</h3><p>A photo at the gate, what’s in the lunchbox, a new haircut.</p></div>
+            <div className="feature"><h3>Big moments</h3><p>Lost teeth, certificates, sports games, kapa haka and school shows.</p></div>
+            <div className="feature"><h3>Made with love</h3><p>Drawings of Nana, Lego, baking her recipe, a card for her birthday.</p></div>
+            <div className="feature"><h3>Just because</h3><p>“Good morning Nana!”, “See you Sunday!”, a photo of the dog being silly.</p></div>
+          </div>
+          <div className="row" style={{ marginTop: 18 }}>
+            <Link className="btn ghost" href="/what-to-send-nana">40 things to send Nana</Link>
+            <Link className="btn ghost" href="/send-photos-to-grandparents">Sending photos to grandparents</Link>
           </div>
         </section>
 
@@ -224,13 +264,14 @@ export default function Home() {
         <section className="wrap section" id="questions" style={{ paddingTop: 16 }}>
           <h2>Questions families ask</h2>
           <div className="faq">
-            <details><summary>What kind of TV does it need?</summary><p>Any smart TV with a web browser. If the TV is older or its browser is slow, a Chromecast or Fire TV Stick works well.</p></details>
-            <details><summary>Does the rest home need to do anything?</summary><p>Only turn the TV on and leave it on the right input. Everything else is done by the family.</p></details>
-            <details><summary>What happens after a power cut?</summary><p>Type the short address on the TV again and it goes straight back to the photos. No code needed a second time.</p></details>
-            <details><summary>Can Mum reply?</summary><p>Not yet. Senders can see when their message has played on the TV.</p></details>
-            <details><summary>Who can see the photos?</summary><p>Only the TV and the family members you approve. Photos aren’t public or searchable, and you can delete anything at any time.</p></details>
-            <details><summary>How do I cancel?</summary><p>From your family page, under Subscription. The screen keeps working until the end of the period you’ve paid for.</p></details>
+            {FAQ.map(([q, a]) => <details key={q}><summary>{q}</summary><p>{a}</p></details>)}
           </div>
+        </section>
+
+        {/* ── Guides ── */}
+        <section className="wrap section" style={{ paddingTop: 0 }}>
+          <div className="section-head"><h2>Guides for families</h2><Link href="/guides" className="small">All guides →</Link></div>
+          <div className="rt-chips">{GUIDES.map((g) => <Link key={g.slug} href={`/${g.slug}`} className="rt-chip">{g.nav}</Link>)}</div>
         </section>
 
         {/* ── Close ── */}

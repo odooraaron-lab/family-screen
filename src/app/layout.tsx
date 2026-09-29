@@ -1,9 +1,10 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import { PRODUCT, BRAND } from '@/lib/config';
+import { PRODUCT, BRAND, APP_URL } from '@/lib/config';
 
 export const metadata: Metadata = {
-  title: `${PRODUCT} by ${BRAND}`,
+  metadataBase: new URL(APP_URL),
+  title: { default: `${PRODUCT} by ${BRAND}`, template: `%s | ${PRODUCT}` },
   description: 'Family anywhere send photos, videos and messages to the TV in a rest home room. Nothing for the resident to learn.',
 };
 
