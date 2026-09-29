@@ -232,6 +232,7 @@ export const GUIDES: Guide[] = [
     ],
     faq: [
       ['What do you buy someone in a rest home who has everything?', 'Time and connection. Visits, calls and a steady stream of family photos and news usually mean more than another object. Small comforts and treats are good too.'],
+      ['What about a big birthday party for Nana?', 'For an 80th or 90th, our sister site Wishcast (myqr.co.nz/tv-slideshow) makes a slideshow of photos through the years that plays on any TV at the party.'],
       ['Can I give Resthome TV as a gift?', 'Yes. Set it up in their name, connect their TV on your next visit, and share the send link with the family.'],
       ['What’s a good Christmas or Mother’s Day gift for Nana in care?', 'Something personal and practical: a photo book with names, a cosy blanket, her favourite treats, or a subscription that sends her family photos all year.'],
     ],
