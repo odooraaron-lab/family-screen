@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { MobileBuyBar } from '@/components/MobileBuyBar';
 import { SiteHead, SiteFoot } from '@/components/SiteChrome';
 import type { Metadata } from 'next';
-import { PRICES, TRIAL_DAYS, SUPPORT_EMAIL, PRODUCT } from '@/lib/config';
+import { PRICES, TRIAL_DAYS, SUPPORT_EMAIL, PRODUCT, APP_URL } from '@/lib/config';
 import { GUIDES } from '@/lib/guides';
 import { pageMeta, JsonLd, faqLd, productLd, organizationLd } from '@/lib/seo';
 
@@ -89,7 +89,7 @@ const COMPARE: { what: string; us: boolean; call: boolean; frame: boolean; chat:
 export default function Home() {
   return (
     <>
-      <JsonLd data={[organizationLd(), productLd(), faqLd(FAQ)]} />
+      <JsonLd data={[organizationLd(), { '@context': 'https://schema.org', '@type': 'WebSite', name: 'Resthome TV', alternateName: 'Resthome TV by myQR', url: APP_URL }, productLd(), faqLd(FAQ)]} />
       <SiteHead />
       <main className="lp">
         {/* ── Hero ── */}
