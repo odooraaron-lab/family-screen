@@ -9,6 +9,7 @@ const page = (title: string, head: string, body: string) => `<!doctype html>
 <html lang="en-NZ"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
 <title>${title}</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
 <style>${TV_CSS}</style>${head}</head><body>${body}</body></html>`;
