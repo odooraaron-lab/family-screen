@@ -48,68 +48,153 @@ function Photo() {
   );
 }
 
+const Tick = () => <svg className="tick" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#E3F4F1" /><path d="M7 12.5l3 3 7-7" fill="none" stroke="#0F766E" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" /></svg>;
+const Cross = () => <svg className="tick" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#FCE8EE" /><path d="M8.5 8.5l7 7M15.5 8.5l-7 7" fill="none" stroke="#C23A64" strokeWidth="2.6" strokeLinecap="round" /></svg>;
+
+function Ico({ d, c }: { d: string; c: string }) {
+  return <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={d} /></svg>;
+}
+
+const COMPARE: { what: string; us: boolean; call: boolean; frame: boolean; chat: boolean }[] = [
+  { what: 'Nothing for Mum or Dad to press, charge or remember', us: true, call: false, frame: true, chat: false },
+  { what: 'Family can send without installing an app', us: true, call: false, frame: false, chat: false },
+  { what: 'Shows who sent it, big and easy to read', us: true, call: true, frame: false, chat: false },
+  { what: 'Photos, short videos and written messages', us: true, call: false, frame: false, chat: true },
+  { what: 'On the big TV they already have', us: true, call: false, frame: false, chat: false },
+  { what: 'You approve who can send', us: true, call: true, frame: false, chat: false },
+  { what: 'Dims to a clock at night', us: true, call: false, frame: false, chat: false },
+];
+
 export default function Home() {
   return (
     <>
       <SiteHead />
-      <main>
-        <section className="wrap hero">
-          <div>
-            <span className="eyebrow">Made for rest home rooms</span>
-            <h1>Family photos, on Grandma’s own TV.</h1>
-            <p className="lede">
-              Everyone in the family sends photos, videos and little messages from their phone.
-              They play on the TV in her room, with who sent them. She doesn’t need to press a thing.
-            </p>
-            <div className="row">
-              <Link className="btn" href="/start">Set up a screen</Link>
-              <a className="btn ghost" href="#how">How it works</a>
-            </div>
-            {TRIAL_DAYS > 0 && <p className="small muted" style={{ marginTop: 14 }}>Free for {TRIAL_DAYS} days, then {PRICES.monthly.label} or {PRICES.yearly.label}. Cancel any time.</p>}
-          </div>
-          <div className="scene" role="img" aria-label="A resident in an armchair watching family photos arrive on the TV in their room">
-            <Room />
-            <div className="tvbox">
-              <div className="screen">
-                <Photo />
-                <span className="clock">10:42</span>
-                <span className="from">From Sarah in Brisbane</span>
+      <main className="lp">
+        {/* ── Hero ── */}
+        <section className="lp-hero">
+          <div className="wrap lp-hero-in">
+            <div>
+              <span className="eyebrow">For families with someone in a rest home</span>
+              <h1>Be part of Mum’s day, <span className="hl">even when you can’t be there.</span></h1>
+              <p className="lede">
+                The whole family sends photos, videos and little notes from their phones. They appear on the TV in her room,
+                with who sent them. She doesn’t have to press a thing.
+              </p>
+              <div className="row">
+                <Link className="btn big" href="/start">Set up Mum’s screen</Link>
+                <a className="btn ghost big" href="#how">See how it works</a>
               </div>
+              <ul className="lp-promise">
+                <li><Tick /> Ready in five minutes</li>
+                <li><Tick /> No app, no passwords</li>
+                <li><Tick /> {TRIAL_DAYS > 0 ? `${TRIAL_DAYS} days free, then ` : ''}{PRICES.monthly.label}, cancel any time</li>
+              </ul>
             </div>
-            <div className="phone"><div className="pic" /><div className="send">Send</div></div>
+            <div className="lp-stage">
+              <div className="scene" role="img" aria-label="A resident in an armchair as family photos and messages arrive on the TV in their room">
+                <Room />
+                <div className="tvbox"><div className="screen"><Photo /><span className="clock">10:42</span><span className="from">From Sarah in Brisbane</span></div></div>
+                <div className="phone"><div className="pic" /><div className="send">Send</div></div>
+              </div>
+              <div className="bubble b1"><b>Aroha</b>See you Sunday, Nana! 💛</div>
+              <div className="bubble b2"><b>Sam</b>sent 3 photos from the beach</div>
+              <div className="bubble b3"><b>Mike</b>sent a video · 0:42</div>
+            </div>
           </div>
         </section>
 
-        <div className="wrap trust">
-          <div><b>One price per TV</b>Monthly or yearly</div>
-          <div><b>No app for anyone</b>Just a link and a phone</div>
-          <div><b>Family only</b>You approve who can send</div>
-          <div><b>Made in New Zealand</b>Prices in NZD</div>
-        </div>
+        {/* ── The problem ── */}
+        <section className="lp-dark">
+          <div className="wrap">
+            <p className="kicker">Sound familiar?</p>
+            <h2>Visits are precious. <br />The days in between are long.</h2>
+            <div className="lp-pains">
+              <div><span className="pain-ico"><Ico d="M7 2h10v20H7zM11 18h2" c="#FFC857" /></span><h3>Phones and tablets get too hard</h3><p>Tiny buttons, forgotten passwords, flat batteries. The tablet ends up in a drawer.</p></div>
+              <div><span className="pain-ico"><Ico d="M15 10l5-3v10l-5-3zM3 6h12v12H3z" c="#FFC857" /></span><h3>Video calls need someone to help</h3><p>Staff are busy, time zones clash, and calls get missed.</p></div>
+              <div><span className="pain-ico"><Ico d="M4 5h16v11H8l-4 4z" c="#FFC857" /></span><h3>Photos stay stuck in the group chat</h3><p>The grandkids’ photos are on everyone’s phone except the one person who’d love them most.</p></div>
+            </div>
+          </div>
+        </section>
 
+        {/* ── The answer ── */}
+        <section className="wrap section lp-answer">
+          <div className="lp-answer-copy">
+            <p className="kicker dark">The answer</p>
+            <h2>One screen. The whole family. <br />Nothing for Mum to learn.</h2>
+            <p className="lede">{PRODUCT} turns the TV in her room into a window on the family. Every photo, video and note you send plays on the big screen, with a gentle chime and your name, then keeps cycling all day.</p>
+            <ul className="lp-list">
+              <li><Tick /><span><b>Big, clear and calm.</b> Large text, one thing at a time, a clock always on screen.</span></li>
+              <li><Tick /><span><b>Family only.</b> You approve each new person once. Nothing is public.</span></li>
+              <li><Tick /><span><b>Works on the TV she already has.</b> Any smart TV, or a Chromecast or Fire TV Stick.</span></li>
+              <li><Tick /><span><b>Quiet at night.</b> From 8pm to 7am it dims to a big, easy clock.</span></li>
+            </ul>
+            <Link className="btn big" href="/start">Set up Mum’s screen</Link>
+          </div>
+          <div className="lp-answer-tv" aria-hidden="true">
+            <div className="tvbig">
+              <div className="tvbig-screen">
+                <span className="tv-clock">Tuesday 10:42</span>
+                <span className="tv-new">New</span>
+                <p className="tv-msg">“Happy birthday Nana! The kids made you a cake. Can’t wait to see you at Christmas.”</p>
+                <span className="tv-from">From Sarah in Brisbane</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── Who it's for ── */}
+        <section className="band">
+          <div className="wrap">
+            <div className="section-head"><h2>Made for everyone around Mum</h2></div>
+            <div className="lp-who">
+              <div className="who w1"><h3>For the family far away</h3><p>Send a photo from the airport, a video from the school concert, a quick “thinking of you”. It’s on her TV in seconds, wherever you are.</p></div>
+              <div className="who w2"><h3>For Mum or Dad</h3><p>No buttons, no apps, no passwords. Just the faces they love on the TV, with names in big letters, and a soft chime when something new arrives.</p></div>
+              <div className="who w3"><h3>For the rest home staff</h3><p>Nothing to set up and nothing to manage. The TV just needs to be on. Families do the rest from their phones.</p></div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── How it works ── */}
         <section className="wrap section" id="how">
-          <div className="section-head"><h2>How it works</h2><p className="muted" style={{ margin: 0 }}>Ready in five minutes. Nothing to install.</p></div>
+          <div className="section-head"><h2>Up and running in five minutes</h2><p className="muted" style={{ margin: 0 }}>Nothing to install, for anyone.</p></div>
           <ol className="steps">
-            <li><h3>Set up the screen</h3><p className="muted">Pick a name for the screen and pay online. You get a send link and a printable QR card for the family.</p></li>
-            <li><h3>Connect the TV</h3><p className="muted">On the TV’s browser go to our short address. It shows a 6-digit code; type it on your phone and you’re done.</p></li>
-            <li><h3>Share with the family</h3><p className="muted">Put the send link in the family group chat. Approve each new person once, then their photos go straight to the TV.</p></li>
+            <li><h3>Set up the screen</h3><p className="muted">Choose a name for the screen and pay online. You get a send link and a printable QR card for the family.</p></li>
+            <li><h3>Connect the TV</h3><p className="muted">On the TV’s browser, go to our short address. Type the 6-digit code it shows into your phone. Done, and it remembers.</p></li>
+            <li><h3>Share with the family</h3><p className="muted">Drop the send link in the family group chat. Approve each person once, then their photos go straight to the TV.</p></li>
           </ol>
         </section>
 
+        {/* ── Comparison ── */}
+        <section className="wrap section" style={{ paddingTop: 0 }}>
+          <div className="section-head"><h2>Why not just…?</h2><p className="muted" style={{ margin: 0 }}>How {PRODUCT} compares with what families usually try.</p></div>
+          <div className="compare-wrap">
+            <table className="compare">
+              <thead><tr><th scope="col"><span className="sr-only">Feature</span></th><th scope="col" className="us">{PRODUCT}</th><th scope="col">Video calls</th><th scope="col">Digital photo frame</th><th scope="col">Family group chat</th></tr></thead>
+              <tbody>
+                {COMPARE.map((r) => (
+                  <tr key={r.what}><th scope="row">{r.what}</th><td className="us">{r.us ? <Tick /> : <Cross />}</td><td>{r.call ? <Tick /> : <Cross />}</td><td>{r.frame ? <Tick /> : <Cross />}</td><td>{r.chat ? <Tick /> : <Cross />}</td></tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        {/* ── Features ── */}
         <section className="band">
           <div className="wrap">
             <div className="section-head"><h2>Gentle by design</h2><p className="muted" style={{ margin: 0 }}>Built around the person in the room.</p></div>
             <div className="features">
-              <div className="feature"><div className="ico" style={{ background: '#FCE8EE' }}><Ico d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z" c="#C23A64" /></div><h3>Nothing to learn</h3><p>No buttons, apps or passwords for the resident. New messages play with a soft chime, then everything cycles.</p></div>
-              <div className="feature"><div className="ico" style={{ background: '#FFF4D6' }}><Ico d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" c="#9A6B00" /></div><h3>Quiet at night</h3><p>From 8pm to 7am the screen dims to a big, easy clock. You choose the hours.</p></div>
-              <div className="feature"><div className="ico" style={{ background: '#E3F4F1' }}><Ico d="M12 3l7 3v5c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6z" c="#0F766E" /></div><h3>Family only</h3><p>Only people you approve can send. Remove any message from your family page.</p></div>
-              <div className="feature"><div className="ico" style={{ background: '#E9F1FC' }}><Ico d="M5 12.5a10 10 0 0 1 14 0M8 15.5a6 6 0 0 1 8 0M12 19h.01" c="#2E2140" /></div><h3>Keeps going</h3><p>If the wifi drops it keeps playing recent photos, and we email you if the TV has been off for a day.</p></div>
+              <div className="feature"><div className="ico" style={{ background: '#FCE8EE' }}><Ico d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z" c="#C23A64" /></div><h3>Nothing to learn</h3><p>New messages play first with a soft chime, then everything cycles. No remote needed.</p></div>
+              <div className="feature"><div className="ico" style={{ background: '#FFF4D6' }}><Ico d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" c="#9A6B00" /></div><h3>Quiet at night</h3><p>The screen dims to a big clock overnight. You choose the hours.</p></div>
+              <div className="feature"><div className="ico" style={{ background: '#E3F4F1' }}><Ico d="M12 3l7 3v5c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6z" c="#0F766E" /></div><h3>Private</h3><p>Only people you approve can send. Remove anything, any time, from your family page.</p></div>
+              <div className="feature"><div className="ico" style={{ background: '#E9F1FC' }}><Ico d="M5 12.5a10 10 0 0 1 14 0M8 15.5a6 6 0 0 1 8 0M12 19h.01" c="#2E2140" /></div><h3>Keeps going</h3><p>If the Wi-Fi drops it keeps playing, and we email you if the TV has been off for a day.</p></div>
             </div>
           </div>
         </section>
 
+        {/* ── Pricing ── */}
         <section className="wrap section" id="pricing">
-          <div className="section-head"><h2>Simple pricing</h2><p className="muted" style={{ margin: 0 }}>One price per TV. Cancel any time.</p></div>
+          <div className="section-head"><h2>One simple price per TV</h2><p className="muted" style={{ margin: 0 }}>The whole family sends for free. Cancel any time.</p></div>
           <div className="price-grid">
             <div className="price-card">
               <h3>Monthly</h3>
@@ -127,7 +212,7 @@ export default function Home() {
             <div className="price-card dark">
               <h3>For rest homes</h3>
               <p style={{ margin: 0 }}>Offer {PRODUCT} to every resident, with one bill and help setting up the TVs.</p>
-              <ul><li>A screen for each room</li><li>One invoice</li><li>Staff don’t need to do a thing</li></ul>
+              <ul><li>A screen for each room</li><li>One invoice</li><li>Nothing for staff to manage</li></ul>
               {SUPPORT_EMAIL
                 ? <a className="btn sun" href={`mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(PRODUCT + ' for our rest home')}`}>Talk to us</a>
                 : <Link className="btn sun" href="/start">Get started</Link>}
@@ -135,30 +220,28 @@ export default function Home() {
           </div>
         </section>
 
+        {/* ── FAQ ── */}
         <section className="wrap section" id="questions" style={{ paddingTop: 16 }}>
           <h2>Questions families ask</h2>
           <div className="faq">
             <details><summary>What kind of TV does it need?</summary><p>Any smart TV with a web browser. If the TV is older or its browser is slow, a Chromecast or Fire TV Stick works well.</p></details>
             <details><summary>Does the rest home need to do anything?</summary><p>Only turn the TV on and leave it on the right input. Everything else is done by the family.</p></details>
             <details><summary>What happens after a power cut?</summary><p>Type the short address on the TV again and it goes straight back to the photos. No code needed a second time.</p></details>
-            <details><summary>Can Grandpa reply?</summary><p>Not yet. Senders can see when their message has played on the TV.</p></details>
+            <details><summary>Can Mum reply?</summary><p>Not yet. Senders can see when their message has played on the TV.</p></details>
             <details><summary>Who can see the photos?</summary><p>Only the TV and the family members you approve. Photos aren’t public or searchable, and you can delete anything at any time.</p></details>
             <details><summary>How do I cancel?</summary><p>From your family page, under Subscription. The screen keeps working until the end of the period you’ve paid for.</p></details>
           </div>
         </section>
 
+        {/* ── Close ── */}
         <section className="wrap">
           <div className="cta-band">
-            <div><h2>Bring the family into the room</h2><p>Set up a screen in five minutes. Photos can be on the TV tonight.</p></div>
-            <Link className="btn sun" href="/start">Set up a screen</Link>
+            <div><h2>Tonight, Mum could be looking at the grandkids.</h2><p>Set up a screen in five minutes and send the first photo straight away.</p></div>
+            <Link className="btn sun big" href="/start">Set up Mum’s screen</Link>
           </div>
         </section>
       </main>
       <SiteFoot />
     </>
   );
-}
-
-function Ico({ d, c }: { d: string; c: string }) {
-  return <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={d} /></svg>;
 }
