@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { MobileBuyBar } from '@/components/MobileBuyBar';
 import { SiteHead, SiteFoot } from '@/components/SiteChrome';
 import type { Metadata } from 'next';
 import { PRICES, TRIAL_DAYS, SUPPORT_EMAIL, PRODUCT } from '@/lib/config';
@@ -129,7 +130,7 @@ export default function Home() {
           <div className="wrap">
             <p className="kicker">Sound familiar?</p>
             <h2>Visits are precious. <br />The days in between are long.</h2>
-            <div className="lp-pains">
+            <div className="lp-pains m-swipe">
               <div><span className="pain-ico"><Ico d="M7 2h10v20H7zM11 18h2" c="#FFC857" /></span><h3>Phones and tablets get too hard</h3><p>Tiny buttons, forgotten passwords, flat batteries. The tablet ends up in a drawer.</p></div>
               <div><span className="pain-ico"><Ico d="M15 10l5-3v10l-5-3zM3 6h12v12H3z" c="#FFC857" /></span><h3>Video calls need someone to help</h3><p>Staff are busy, time zones clash, and calls get missed.</p></div>
               <div><span className="pain-ico"><Ico d="M4 5h16v11H8l-4 4z" c="#FFC857" /></span><h3>Photos stay stuck in the group chat</h3><p>The grandkids’ photos are on everyone’s phone except the one person who’d love them most.</p></div>
@@ -186,7 +187,7 @@ export default function Home() {
         <section className="band">
           <div className="wrap">
             <div className="section-head"><h2>Made for everyone around Mum</h2></div>
-            <div className="lp-who">
+            <div className="lp-who m-swipe">
               <div className="who w1"><h3>For the family far away</h3><p>Send a photo from the airport, a video from the school concert, a quick “thinking of you”. It’s on her TV in seconds, wherever you are.</p></div>
               <div className="who w2"><h3>For Mum or Dad</h3><p>No buttons, no apps, no passwords. Just the faces they love on the TV, with names in big letters, and a soft chime when something new arrives.</p></div>
               <div className="who w3"><h3>For the rest home staff</h3><p>Nothing to set up and nothing to manage. The TV just needs to be on. Families do the rest from their phones.</p></div>
@@ -271,7 +272,7 @@ export default function Home() {
         {/* ── Guides ── */}
         <section className="wrap section" style={{ paddingTop: 0 }}>
           <div className="section-head"><h2>Guides for families</h2><Link href="/guides" className="small">All guides →</Link></div>
-          <div className="rt-chips">{GUIDES.map((g) => <Link key={g.slug} href={`/${g.slug}`} className="rt-chip">{g.nav}</Link>)}</div>
+          <div className="rt-chips m-chips">{GUIDES.map((g) => <Link key={g.slug} href={`/${g.slug}`} className="rt-chip">{g.nav}</Link>)}</div>
         </section>
 
         {/* ── Close ── */}
@@ -283,6 +284,7 @@ export default function Home() {
         </section>
       </main>
       <SiteFoot />
+      <MobileBuyBar title={PRICES.monthly.label} note="The whole family sends free" href="/start" label="Set up a screen" hideOn="#pricing" />
     </>
   );
 }

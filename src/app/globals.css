@@ -341,7 +341,7 @@ form.inline { display: inline; }
   .bubble.b1 { display: none; }
   .bubble.b2 { top: -26px; right: 4px; }
   .bubble.b3 { left: 8px; bottom: -20px; }
-  .lp-hero .row .btn { width: 100%; }
+  .lp-hero .row .btn { width: 100%; padding: 0 8px; font-size: 14px; white-space: nowrap; }
 }
 .wordmark > span { white-space: nowrap; }
 
@@ -372,3 +372,146 @@ form.inline { display: inline; }
 .rt-grand { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
 @media (max-width: 900px) { .rt-grand { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 520px) { .rt-grand { grid-template-columns: minmax(0, 1fr); } }
+
+/* ═══════════ Phones: denser layout, swipe rails, one tap from buying ═══════════ */
+.m-buybar { display: none; }
+@media (max-width: 640px) {
+  body { font-size: 15px; line-height: 1.5; }
+  .wrap { width: calc(100% - 28px); }
+  h1 { font-size: 32px; }
+  h2 { font-size: 24px; }
+  h3 { font-size: 17px; }
+  p { margin-bottom: .8em; }
+  .section { padding: 28px 0; }
+  .section-head { margin-bottom: 14px; gap: 6px; }
+  .section-head p { font-size: 14px; }
+  .eyebrow { font-size: 12px; padding: 4px 10px; margin-bottom: 10px; }
+  .btn { min-height: 44px; font-size: 15px; padding: 0 16px; }
+  .lp .btn.big, .btn.big { min-height: 48px; padding: 0 16px; font-size: 15.5px; }
+  .row { gap: 8px; }
+  .announce { font-size: 12px; padding: 6px 10px; }
+  .site-head { padding: 10px 0; }
+  .lp .kicker { font-size: 12px; margin-bottom: 6px; }
+
+  /* Hero: short and punchy, two buttons side by side, promises as a 2×2 grid */
+  .lp-hero { padding: 6px 0 22px; }
+  .lp-hero h1 { font-size: 33px; margin-bottom: 10px; }
+  .lp-hero .lede { font-size: 15.5px; margin-bottom: 14px; }
+  .lp-hero-in { gap: 18px; }
+  .lp-hero .row { display: grid; grid-template-columns: 1fr 1fr; }
+  .lp-hero .row .btn { width: 100%; padding: 0 8px; font-size: 14px; white-space: nowrap; }
+  .lp-promise { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 10px; font-size: 12.5px; margin-top: 12px; }
+
+  /* Small cards two-up */
+  .features { grid-template-columns: 1fr 1fr !important; gap: 10px; }
+  .feature { padding: 14px; border-radius: 18px; }
+  .feature .ico { width: 34px; height: 34px; border-radius: 11px; margin-bottom: 8px; }
+  .feature .ico svg { width: 19px; height: 19px; }
+  .feature h3 { font-size: 15.5px; margin-bottom: 4px; }
+  .feature p { font-size: 13px; line-height: 1.45; }
+
+  /* Steps: compact numbered rows */
+  .steps { grid-template-columns: 1fr !important; gap: 8px; }
+  .steps li { display: grid; grid-template-columns: 32px 1fr; column-gap: 12px; align-items: start; padding: 12px 14px; border-radius: 16px; }
+  .steps li::before { width: 32px; height: 32px; font-size: 15px; margin: 0; grid-row: span 2; }
+  .steps h3 { font-size: 15.5px; margin: 5px 0 2px; }
+  .steps p { font-size: 13.5px; }
+
+  /* Plans side by side */
+  .price-grid { grid-template-columns: 1fr 1fr !important; gap: 10px; }
+  .price-card { padding: 20px 12px 14px; border-radius: 20px; gap: 6px; }
+  .price-card h3 { font-size: 15px; margin: 0; }
+  .price, .price-card .price { font-size: 19px; }
+  .price-card ul { font-size: 12.5px; gap: 3px; margin: 2px 0 6px; }
+  .price-card li::before { margin-right: 5px; }
+  .price-card .btn { font-size: 13.5px; min-height: 40px; padding: 0 8px; }
+  .price-card .tag { left: 12px; top: -11px; font-size: 11px; padding: 2px 10px; }
+  .price-card.dark { grid-column: 1 / -1; }
+
+  /* FAQ */
+  .faq details { padding: 0 14px; border-radius: 14px; margin-bottom: 6px; }
+  .faq summary { padding: 11px 0; font-size: 14.5px; }
+  .faq details p { font-size: 14px; }
+
+  .cta-band { padding: 22px 20px; border-radius: 22px; gap: 14px; }
+  .cta-band h2 { font-size: 22px; }
+  .cta-band p { font-size: 14px; }
+
+  /* Footer: three tight columns, room for the buy bar */
+  .site-foot { margin-top: 36px; }
+  .site-foot .wrap { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 18px 12px; padding: 28px 0 96px; font-size: 13px; }
+  .site-foot .brandcol { grid-column: 1 / -1; }
+  .site-foot .brandcol p { font-size: 13px; }
+  .site-foot h4 { font-size: 14px; margin-bottom: 8px; }
+  .site-foot a { font-size: 12.5px; margin-bottom: 6px; line-height: 1.3; }
+  .site-foot .fine { grid-column: 1 / -1; }
+
+  /* Swipe rails: the next card peeks in so people know to swipe */
+  .m-swipe { display: flex !important; overflow-x: auto; scroll-snap-type: x mandatory; gap: 10px; margin-left: -14px; margin-right: -14px; padding: 2px 14px 10px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .m-swipe::-webkit-scrollbar { display: none; }
+  .m-swipe > * { flex: 0 0 78%; scroll-snap-align: start; min-width: 0; }
+  .m-chips { flex-wrap: nowrap !important; overflow-x: auto; margin-left: -14px; margin-right: -14px; padding: 2px 14px 6px; scrollbar-width: none; }
+  .m-chips::-webkit-scrollbar { display: none; }
+  .m-chips > * { flex: none; white-space: nowrap; }
+  .m-hint { display: block; font-size: 12px; font-weight: 800; color: var(--muted); margin: -6px 0 8px; }
+
+  /* Sticky buy bar */
+  .m-buybar { display: flex; position: fixed; left: 10px; right: 10px; bottom: calc(10px + env(safe-area-inset-bottom)); z-index: 60; align-items: center; justify-content: space-between; gap: 10px; background: var(--ink); color: #fff; border-radius: 18px; padding: 9px 9px 9px 16px; box-shadow: 0 14px 30px -8px rgba(20, 12, 30, .55); transform: translateY(160%); transition: transform .3s ease; }
+  .m-buybar.on { transform: none; }
+  .m-buybar b { display: block; font-family: var(--display); font-size: 16px; line-height: 1.15; }
+  .m-buybar small { display: block; font-size: 11.5px; opacity: .8; line-height: 1.3; }
+  .m-buybar .btn { flex: none; min-height: 42px; background: var(--lamp); border-color: var(--lamp); color: var(--ink); font-size: 14.5px; }
+}
+@media (min-width: 641px) { .m-hint { display: none; } }
+@media (max-width: 640px) {
+  /* Resthome TV specifics */
+  .lp-stage { width: 100%; max-width: 340px; margin: 4px auto 18px; justify-self: center; }
+  .scene { border-radius: 22px; }
+  .bubble { font-size: 11.5px; padding: 6px 10px; max-width: 160px; border-radius: 12px; }
+  .bubble b { font-size: 12px; }
+  .bubble.b1 { left: -4px; }
+  .bubble.b2 { right: -4px; top: -12px; }
+  .bubble.b3 { bottom: -14px; }
+  .lp-dark { padding: 30px 0; }
+  .lp-dark h2 { font-size: 25px; }
+  .lp-pains { margin-top: 16px; }
+  .lp-pains.m-swipe > * { flex-basis: 72%; padding: 16px; border-radius: 18px; }
+  .lp-pains h3 { font-size: 16.5px; margin: 10px 0 4px; }
+  .lp-pains p { font-size: 13.5px; }
+  .pain-ico { width: 36px; height: 36px; border-radius: 11px; }
+  .lp-answer { gap: 18px; }
+  .lp-answer h2 { font-size: 25px; }
+  .lp-answer .lede { font-size: 15px; }
+  .lp-list { grid-template-columns: 1fr 1fr; gap: 10px; font-size: 13px; line-height: 1.4; margin-bottom: 16px; }
+  .lp-list li { display: block; }
+  .lp-list .tick { width: 18px; height: 18px; vertical-align: -4px; margin-right: 2px; }
+  .lp-who.m-swipe > * { flex-basis: 74%; }
+  .who { padding: 16px; border-radius: 20px; }
+  .who h3 { font-size: 17px; }
+  .who p { font-size: 13.5px; }
+  .rt-grand { grid-template-columns: 1fr 1fr !important; gap: 10px; }
+  .compare-wrap { border-radius: 16px; }
+  .compare { min-width: 0; table-layout: fixed; }
+  .compare th, .compare td { padding: 8px 4px; font-size: 11.5px; line-height: 1.25; }
+  .compare thead th { font-size: 11.5px; }
+  .compare tbody th { width: 46%; padding-left: 10px; font-size: 12px; }
+  .compare thead th:first-child { width: 46%; }
+  .compare td .tick { width: 18px; height: 18px; }
+  .tvbig { border-radius: 16px; padding: 9px; }
+  .rt-h1 { font-size: 29px; }
+  .rt-body { gap: 18px; }
+  .rt-main h2 { font-size: 21px; }
+  .rt-main section { margin-bottom: 18px; }
+  .rt-list { gap: 7px; font-size: 14px; }
+  .rt-ideas { grid-template-columns: 1fr 1fr !important; gap: 10px; }
+  .rt-guides { gap: 10px; }
+  .rt-guide { padding: 14px; }
+  .rt-guide h2 { font-size: 18px; }
+  .rt-guide p { font-size: 13px; }
+  .rt-chip { padding: 8px 14px; font-size: 14px; }
+}
+@media (max-width: 380px) {
+  .site-head .btn.small { font-size: 13px; padding: 0 12px; min-height: 36px; }
+  .site-head .logo { gap: 6px; }
+  .lp-hero .row .btn { font-size: 13px; padding: 0 6px; }
+}
