@@ -1,4 +1,4 @@
-# Family Screen
+# Resthome TV
 
 Family send photos, videos and messages from their phones; they play on the TV in a rest home room.
 
@@ -23,7 +23,7 @@ Without `SCREENS_DOMAIN` set, every screen also works at `/s/<name>/…` (handy 
 4. **Storage.** Vercel project → Storage → Create → **Blob** → connect it to this project.
    That adds `BLOB_READ_WRITE_TOKEN` for you. Redeploy.
 5. **Stripe.**
-   - Products → add "Family Screen" with two recurring prices (monthly and yearly, NZD).
+   - Products → add "Resthome TV" with two recurring prices (monthly and yearly, NZD).
      Put their IDs in `STRIPE_PRICE_MONTHLY` / `STRIPE_PRICE_YEARLY`.
    - Settings → Billing → Customer portal → turn it on (lets families cancel or change card).
    - Developers → Webhooks → add `https://resthome.<brand>.nz/api/stripe/webhook` with

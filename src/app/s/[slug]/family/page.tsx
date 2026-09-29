@@ -3,7 +3,7 @@ import { db } from '@/lib/db';
 import { getScreen, isOwner, base } from '@/lib/screens';
 import { screenUrl, PRODUCT, PRICES, APP_URL } from '@/lib/config';
 import { CopyLink } from '@/components/CopyLink';
-import { Logo } from '@/components/SiteChrome';
+import { Logo, Wordmark } from '@/components/SiteChrome';
 import { ConfirmButton } from '@/components/ConfirmButton';
 import { approveSender, blockSender, removeMessage, saveSettings, newTvLink, newSendLink, emailLinks, connectTv } from './actions';
 
@@ -64,7 +64,7 @@ export default async function Family({ params, searchParams }: {
     <>
       <div className="dash-top">
         <div className="wrap">
-          <span className="logo"><Logo size={28} light />{PRODUCT} <small>&middot; Family page</small></span>
+          <span className="logo"><Logo size={28} light /><Wordmark /> <small className="dash-sub">&middot; Family page</small></span>
         </div>
       </div>
       <div className="dash-body">
