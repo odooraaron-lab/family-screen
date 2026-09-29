@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { MyqrFamily } from './MyqrFamily';
 import { PRODUCT, BRAND, APP_URL, SUPPORT_EMAIL } from '@/lib/config';
 import { GUIDES } from '@/lib/guides';
 
@@ -62,6 +63,7 @@ export function SiteFoot() {
           <a href={`${APP_URL}/privacy`}>Privacy</a>
           <a href={`${APP_URL}/terms`}>Terms</a>
         </div>
+        <MyqrFamily current="resthome" />
         <div className="fine">{PRODUCT} is made by {BRAND} in Aotearoa New Zealand.</div>
       </div>
     </footer>
