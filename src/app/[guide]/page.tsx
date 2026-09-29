@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { MobileBuyBar } from '@/components/MobileBuyBar';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { SiteHead, SiteFoot } from '@/components/SiteChrome';
@@ -89,7 +90,7 @@ export default function GuidePage({ params }: { params: { guide: string } }) {
 
         <section className="wrap section" style={{ paddingTop: 0 }}>
           <h2 style={{ fontSize: 26 }}>Read next</h2>
-          <div className="rt-chips">
+          <div className="rt-chips m-chips">
             {g.related.map((r) => { const o = getGuide(r); return o ? <Link key={r} href={`/${r}`} className="rt-chip">{o.nav}</Link> : null; })}
             <Link href="/guides" className="rt-chip">All guides</Link>
           </div>
@@ -103,6 +104,7 @@ export default function GuidePage({ params }: { params: { guide: string } }) {
         </section>
       </main>
       <SiteFoot />
+      <MobileBuyBar title={PRICES.monthly.label} note="The whole family sends free" href="/start" label="Set up a screen" />
     </>
   );
 }

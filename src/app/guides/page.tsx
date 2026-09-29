@@ -1,7 +1,8 @@
 import Link from 'next/link';
+import { MobileBuyBar } from '@/components/MobileBuyBar';
 import { SiteHead, SiteFoot } from '@/components/SiteChrome';
 import { GUIDES } from '@/lib/guides';
-import { PRODUCT } from '@/lib/config';
+import { PRODUCT, PRICES } from '@/lib/config';
 import { pageMeta, JsonLd, breadcrumbLd } from '@/lib/seo';
 
 export const metadata = pageMeta(
@@ -33,6 +34,7 @@ export default function Guides() {
         </section>
       </main>
       <SiteFoot />
+      <MobileBuyBar title={PRICES.monthly.label} note="The whole family sends free" href="/start" label="Set up a screen" />
     </>
   );
 }
