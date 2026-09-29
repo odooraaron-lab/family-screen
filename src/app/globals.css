@@ -1,4 +1,4 @@
-/* Family Screen, in the same design language as the Wishcast party shop:
+/* Resthome TV, in the same design language as the Wishcast party shop:
    plum ink, berry accent, sky wash, sunshine highlights, rounded cards,
    Grandstander headings and Nunito text. (The TV screen has its own styles in src/lib/tv.ts.) */
 :root {
@@ -207,7 +207,7 @@ textarea { min-height: 120px; resize: vertical; }
 .dash-top { background: var(--ink); color: var(--wash); }
 .dash-top .wrap { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 0; }
 .dash-top .logo { color: #fff; font-size: 20px; }
-.dash-top small { color: #B9AECB; font-family: var(--font); font-weight: 700; font-size: 14px; }
+.dash-top .dash-sub { color: #B9AECB; font-family: var(--font); font-weight: 700; font-size: 14px; }
 .dash-head { padding: 28px 0 18px; }
 .dash-head h1 { font-size: clamp(34px, 5vw, 50px); margin: 8px 0 6px; }
 .dash-head p { color: var(--muted); margin: 0; }
@@ -261,3 +261,8 @@ form.inline { display: inline; }
 .ticks { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
 .ticks li { display: flex; gap: 10px; }
 .ticks li::before { content: '✓'; color: var(--teal); font-weight: 800; }
+
+/* Product name with the umbrella brand (myQR) in tiny letters underneath */
+.wordmark { display: inline-flex; flex-direction: column; line-height: 1; gap: 3px; }
+.wordmark small { font-family: var(--font); font-size: 11px; font-weight: 800; letter-spacing: .08em; color: var(--accent); }
+.site-foot .wordmark small, .dash-top .wordmark small { color: var(--lamp); }

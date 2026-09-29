@@ -1,5 +1,5 @@
 export const BRAND = process.env.BRAND_NAME || 'myQR';
-export const PRODUCT = process.env.PRODUCT_NAME || 'Family Screen';
+export const PRODUCT = process.env.PRODUCT_NAME || 'Resthome TV';
 export const APP_URL = (process.env.APP_URL || 'http://localhost:3000').replace(/\/$/, '');
 export const SCREENS_DOMAIN = (process.env.SCREENS_DOMAIN || '').toLowerCase();
 export const SUPPORT_EMAIL = process.env.SUPPORT_EMAIL || '';

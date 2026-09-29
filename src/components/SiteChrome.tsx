@@ -1,6 +1,11 @@
 import Link from 'next/link';
 import { PRODUCT, BRAND, APP_URL, SUPPORT_EMAIL } from '@/lib/config';
 
+/** The product name with the umbrella brand in tiny letters underneath. */
+export function Wordmark() {
+  return <span className="wordmark"><span>{PRODUCT}</span><small>{BRAND}</small></span>;
+}
+
 export function Logo({ size = 34, light = false }: { size?: number; light?: boolean }) {
   return (
     <svg width={size} height={size} viewBox="0 0 40 40" aria-hidden="true">
@@ -17,7 +22,7 @@ export function SiteHead({ cta = true }: { cta?: boolean }) {
     <>
       <div className="announce">Photos from the family, straight to the TV in their room</div>
       <header className="wrap site-head">
-        <a className="logo" href={APP_URL}><Logo />{PRODUCT}</a>
+        <a className="logo" href={APP_URL}><Logo /><Wordmark /></a>
         <nav className="site-nav" aria-label="Main">
           <a href={`${APP_URL}/#how`}>How it works</a>
           <a href={`${APP_URL}/#pricing`}>Pricing</a>
@@ -34,7 +39,7 @@ export function SiteFoot() {
     <footer className="site-foot">
       <div className="wrap">
         <div className="brandcol">
-          <a className="logo" href={APP_URL}><Logo light />{PRODUCT}</a>
+          <a className="logo" href={APP_URL}><Logo light /><Wordmark /></a>
           <p style={{ margin: 0 }}>Family photos and messages on the TV in a rest home room. Nothing for the resident to learn.</p>
         </div>
         <div>
