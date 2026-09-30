@@ -39,8 +39,8 @@ export const productLd = (path = '') => ({
   brand: { '@type': 'Brand', name: BRAND },
   category: 'Family photo sharing for aged care',
   offers: [
-    { '@type': 'Offer', name: 'Monthly', price: num(PRICES.monthly.label), priceCurrency: 'NZD', url: `${SITE}/start?plan=monthly`, availability: 'https://schema.org/InStock' },
-    { '@type': 'Offer', name: 'Yearly', price: num(PRICES.yearly.label), priceCurrency: 'NZD', url: `${SITE}/start?plan=yearly`, availability: 'https://schema.org/InStock' },
+    { '@type': 'Offer', ...DIGITAL_OFFER, name: 'Monthly', price: num(PRICES.monthly.label), priceCurrency: 'NZD', url: `${SITE}/start?plan=monthly`, availability: 'https://schema.org/InStock' },
+    { '@type': 'Offer', ...DIGITAL_OFFER, name: 'Yearly', price: num(PRICES.yearly.label), priceCurrency: 'NZD', url: `${SITE}/start?plan=yearly`, availability: 'https://schema.org/InStock' },
   ],
 });
 
@@ -58,3 +58,23 @@ export const articleLd = (path: string, headline: string, description: string) =
   '@context': 'https://schema.org', '@type': 'Article', headline, description, inLanguage: 'en-NZ',
   mainEntityOfPage: `${SITE}${path}`, author: { '@type': 'Organization', name: BRAND }, publisher: { '@type': 'Organization', name: BRAND },
 });
+
+// Digital products: delivered instantly online in NZ, so shipping is free and immediate. Returns follow our
+// terms (no refunds except where the law requires). Google asks for both on merchant listings.
+export const DIGITAL_OFFER = {
+  shippingDetails: {
+    '@type': 'OfferShippingDetails',
+    shippingRate: { '@type': 'MonetaryAmount', value: '0', currency: 'NZD' },
+    shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'NZ' },
+    deliveryTime: {
+      '@type': 'ShippingDeliveryTime',
+      handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 0, unitCode: 'DAY' },
+      transitTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 0, unitCode: 'DAY' },
+    },
+  },
+  hasMerchantReturnPolicy: {
+    '@type': 'MerchantReturnPolicy',
+    applicableCountry: 'NZ',
+    returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
+  },
+};
